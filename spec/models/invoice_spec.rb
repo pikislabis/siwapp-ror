@@ -1,11 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Invoice, :type => :model do
-
+RSpec.describe Invoice, type: :model do
   def build_invoice(**kwargs)
-    kwargs[:issue_date] = Date.current() unless kwargs.has_key? :issue_date
-    kwargs[:series] = Series.new(value: "A") unless kwargs.has_key? :series
-
+    kwargs[:issue_date] = Date.current unless kwargs.has_key? :issue_date
+    kwargs[:series] = Series.new(value: 'A') unless kwargs.has_key? :series
 
     customer = FactoryBot.create(:ncustomer)
     invoice = Invoice.new(name: customer.name, identification: customer.identification,
@@ -22,11 +20,11 @@ RSpec.describe Invoice, :type => :model do
     invoice = build_invoice(draft: true, number: 1)
     invoice.save
 
-    expect(invoice.number).to be nil
+    expect(invoice.number).to be_nil
   end
 
   it "gets an invoice number after saving if it's not a draft" do
-    series = Series.new(value: "A", first_number: 5)
+    series = Series.new(value: 'A', first_number: 5)
     invoice1 = build_invoice(series: series)
     invoice1.save
     invoice2 = build_invoice(series: series)
@@ -36,11 +34,11 @@ RSpec.describe Invoice, :type => :model do
     expect(invoice2.number).to eq 6
   end
 
-  it "may have the same number as another invoice from a different series" do
-    invoice1 = build_invoice(series: Series.new(value: "A"))
+  it 'may have the same number as another invoice from a different series' do
+    invoice1 = build_invoice(series: Series.new(value: 'A'))
     invoice1.save
 
-    invoice2 = build_invoice(series: Series.new(value: "B"))
+    invoice2 = build_invoice(series: Series.new(value: 'B'))
     invoice2.save
 
     expect(invoice1.number).to eq 1
@@ -48,22 +46,22 @@ RSpec.describe Invoice, :type => :model do
   end
 
   it "can't have the same number as another invoice from the same series" do
-    invoice1 = build_invoice()
+    invoice1 = build_invoice
     expect(invoice1.save).to be true
 
     invoice2 = build_invoice(series: invoice1.series, number: invoice1.number)
     expect(invoice2.save).to be false
   end
 
-  it "retains the same number after saving" do
+  it 'retains the same number after saving' do
     invoice = build_invoice(number: 2)
     invoice.save
 
     expect(invoice.number).to eq 2
   end
 
-  it "loses the number on deletion" do
-    invoice = build_invoice()
+  it 'loses the number on deletion' do
+    invoice = build_invoice
     invoice.save
 
     expect(invoice.number).to eq 1
@@ -75,8 +73,8 @@ RSpec.describe Invoice, :type => :model do
     expect(invoice.number).to be_nil
   end
 
-  it "can coexist, when deleted, with other deleted invoices in the same series" do
-    invoice1 = build_invoice()
+  it 'can coexist, when deleted, with other deleted invoices in the same series' do
+    invoice1 = build_invoice
     expect(invoice1.save).to be true
 
     invoice2 = build_invoice(series: invoice1.series)
@@ -86,8 +84,8 @@ RSpec.describe Invoice, :type => :model do
     expect(invoice2.destroy).not_to be false
   end
 
-  it "when deleted stores number_was" do
-    invoice = build_invoice()
+  it 'when deleted stores number_was' do
+    invoice = build_invoice
     invoice.save
     number = invoice.number
     invoice.destroy
@@ -95,8 +93,8 @@ RSpec.describe Invoice, :type => :model do
     expect(invoice.deleted_number).to eq number
   end
 
-  it "is restored as draft" do
-    invoice = build_invoice()
+  it 'is restored as draft' do
+    invoice = build_invoice
     invoice.save
 
     expect(invoice.destroy).not_to be false
@@ -111,39 +109,39 @@ RSpec.describe Invoice, :type => :model do
   # Status
   #
 
-  it "returns the right status: draft" do
+  it 'returns the right status: draft' do
     invoice = build_invoice(draft: true)
-    expect(invoice.get_status()).to eq :draft
+    expect(invoice.get_status).to eq :draft
   end
 
-  it "returns the right status: failed" do
+  it 'returns the right status: failed' do
     invoice = build_invoice(failed: true)
-    expect(invoice.get_status()).to eq :failed
+    expect(invoice.get_status).to eq :failed
   end
 
-  it "returns the right status: pending" do
-    invoice = build_invoice(items: [Item.new(quantity: 1, unitary_cost: 10)], due_date: Date.current() + 1)
-    expect(invoice.get_status()).to eq :pending
+  it 'returns the right status: pending' do
+    invoice = build_invoice(items: [Item.new(quantity: 1, unitary_cost: 10)], due_date: Date.current + 1)
+    expect(invoice.get_status).to eq :pending
   end
 
-  it "returns the right status: past due" do
+  it 'returns the right status: past due' do
     invoice = build_invoice(items: [Item.new(quantity: 1, unitary_cost: 10)],
-                            due_date: Date.current())
-    expect(invoice.get_status()).to eq :past_due
+                            due_date: Date.current)
+    expect(invoice.get_status).to eq :past_due
   end
 
-  it "returns the right status: paid" do
+  it 'returns the right status: paid' do
     invoice = build_invoice(items: [Item.new(quantity: 1, unitary_cost: 10)],
                             payments: [Payment.new(amount: 10, date: Date.current)])
     invoice.check_paid
-    expect(invoice.get_status()).to eq :paid
+    expect(invoice.get_status).to eq :paid
   end
 
   #
   # Payments
   #
 
-  it "computes payments right" do
+  it 'computes payments right' do
     # No payment received
     invoice = build_invoice(items: [Item.new(quantity: 5, unitary_cost: 10)])
     # invoice.save
@@ -170,7 +168,7 @@ RSpec.describe Invoice, :type => :model do
     expect(invoice.unpaid_amount).to eq 0
   end
 
-  it "sets paid right" do
+  it 'sets paid right' do
     # A draft invoice can't be paid
     invoice = build_invoice(items: [Item.new(quantity: 5, unitary_cost: 10)], draft: true)
 
@@ -194,10 +192,11 @@ RSpec.describe Invoice, :type => :model do
   end
 
   describe '#duplicate' do
-    before(:each) do
+    subject { invoice.duplicate }
+
+    before do
       5.times do
-        item = FactoryBot.create(:item, quantity: 5, unitary_cost: 10)
-        item.taxes << (Tax.find_by(id: 1) || create(:vat))
+        FactoryBot.create(:item, quantity: 5, unitary_cost: 10)
       end
 
       @invoice = build_invoice(items: Item.all)
@@ -206,44 +205,47 @@ RSpec.describe Invoice, :type => :model do
 
     let(:invoice) { @invoice }
 
-    subject { invoice.duplicate }
-
-    it 'should create new invoice with same customer' do
-      expect{ subject }.to change(Invoice, :count).by(1)
+    it 'creates new invoice with same customer' do
+      expect { subject }.to change(Invoice, :count).by(1)
       expect(Invoice.last.customer).to eq invoice.customer
     end
-    it 'should increase item numbers' do
-      expect{ subject }.to change(Item, :count).by(5)
+
+    it 'increases item numbers' do
+      expect { subject }.to change(Item, :count).by(5)
     end
-    it 'should not create new taxes' do
-      expect{ subject }.to change(Tax, :count).by(0)
+
+    it 'does not create new taxes' do
+      expect { subject }.not_to change(Tax, :count)
     end
-    it 'should not be sent by email' do
+
+    it 'is not sent by email' do
       invoice.update_columns(sent_by_email: true)
 
       subject
 
       expect(Invoice.last.sent_by_email).to eq false
     end
-    it 'should reset paid_amount' do
+
+    it 'resets paid_amount' do
       invoice.update_columns(paid_amount: 100)
 
       subject
 
       expect(Invoice.last.paid_amount).to eq 0
     end
-    it 'should set issue date to today date' do
+
+    it 'sets issue date to today date' do
       invoice.update_columns(issue_date: '2020-03-03')
 
       subject
 
       expect(Invoice.last.issue_date).to eq Date.today
     end
-    it 'should set amounts' do
+
+    it 'sets amounts' do
       subject
 
       expect(Invoice.last.gross_amount).to eq invoice.gross_amount
     end
   end
-
 end
