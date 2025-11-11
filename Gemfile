@@ -38,6 +38,11 @@ group :development, :test do
   gem 'shoulda-matchers'
 
   gem 'timecop'
+
+  # RuboCop for code linting and style enforcement
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 # Access an IRB console on exception pages or by using <%= console %> in views
