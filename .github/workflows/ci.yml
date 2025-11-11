@@ -35,7 +35,16 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.5.7
-        bundler-cache: false
+        bundler-cache: true
+
+    - name: Cache Qt5 packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          /var/cache/apt/archives
+        key: ${{ runner.os }}-qt5-${{ hashFiles('.github/workflows/ci.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-qt5-
 
     - name: Install Qt5 dependencies
       run: |
@@ -44,11 +53,6 @@ jobs:
 
     - name: Setup database configuration
       run: cp config/database.yml.travis config/database.yml
-
-    - name: Install dependencies
-      run: |
-        gem install bundler -v 2.3.27
-        bundle install --jobs 4 --retry 3
 
     - name: Setup database
       run: |

@@ -15,7 +15,7 @@ RSpec.describe "Invoices Search", type: :request do
     FactoryBot.create(:invoice,
         name: "Pete",
         issue_date: "2016-01-06",
-        meta_attributes: '{"mykey":"myvalue"}')
+        meta_attributes: {"mykey" => "myvalue"})
 
     FactoryBot.create(:template)
   end
