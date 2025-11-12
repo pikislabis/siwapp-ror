@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-ruby "2.6.10"
+ruby '2.6.10'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.3'
+gem 'rails', '~> 6.0.0'
 # Use SCSS for stylesheets
 gem 'sass-rails'
+gem 'sassc', '~> 2.4.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # Use CoffeeScript for .coffee assets and views
@@ -43,19 +44,25 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+
+  gem 'pry'
+  gem 'pry-nav'
+  gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
 end
 
 # Access an IRB console on exception pages or by using <%= console %> in views
 gem 'web-console', group: :development
 
 group :test do
-  gem 'capybara-webkit', git: 'https://github.com/thoughtbot/capybara-webkit.git', branch: 'master'
-  gem 'selenium-webdriver'
+  gem 'cuprite'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
 end
 
 gem 'active_model_serializers'
-gem 'acts-as-taggable-on'  # https://github.com/mbleigh/acts-as-taggable-on
+gem 'acts-as-taggable-on' # https://github.com/mbleigh/acts-as-taggable-on
 gem 'autoprefixer-rails'
 gem 'bootsnap'
 gem 'bootstrap'
@@ -70,14 +77,12 @@ gem 'js-routes'
 gem 'material_icons'
 gem 'money'
 gem 'pg'
-gem 'pry-rails', group: :development
 gem 'puma'
-gem 'rails_12factor', group: :production
 gem 'rails-settings-cached'
 gem 'ransack'
 gem 'sass'
-gem 'sentry-ruby'
 gem 'sentry-rails'
+gem 'sentry-ruby'
 gem 'valid_url'
 gem 'wicked_pdf'
 gem 'will_paginate'
@@ -89,5 +94,5 @@ gem 'wisper-celluloid'
 ## to make http POST requests
 gem 'http'
 # for translation
+gem 'dotenv-rails', groups: %i[development test]
 gem 'route_translator'
-gem 'dotenv-rails', groups: [:development, :test]

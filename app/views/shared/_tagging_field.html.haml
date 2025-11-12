@@ -1,3 +1,3 @@
 .form-group
   = f.label :tag_list
-  = f.select :tag_list, options_for_select(@tags, instance.tag_list), {class: 'tags-selector'}, {multiple: true, data: {role: 'tagging'}}
+  = f.select :tag_list, options_for_select(@tags.pluck(:name), instance.tag_list.to_a), {class: 'tags-selector'}, {multiple: true, data: {role: 'tagging'}}

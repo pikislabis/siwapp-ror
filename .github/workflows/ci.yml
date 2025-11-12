@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   test:
@@ -29,34 +29,32 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/siwapp_test
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install Qt5 dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -qq libqt5webkit5-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.10
+          bundler-cache: true
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.6.10
-        bundler-cache: true
+      - name: Setup database configuration
+        run: cp config/database.yml.travis config/database.yml
 
-    - name: Setup database configuration
-      run: cp config/database.yml.travis config/database.yml
+      - name: Setup database
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
 
-    - name: Setup database
-      run: |
-        bin/rails db:create
-        bin/rails db:schema:load
+      - name: Precompile assets
+        run: bin/rails assets:precompile
 
-    - name: Run tests
-      run: xvfb-run bin/rspec
+      - name: Run tests
+        run: bin/rspec
 
-    - name: Upload screenshots on failure
-      if: failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-screenshots
-        path: /tmp/*.png
-        if-no-files-found: ignore
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-screenshots
+          path: /tmp/*.png
+          if-no-files-found: ignore

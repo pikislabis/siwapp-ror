@@ -24,3 +24,6 @@ Gemfile.lock
 
 .env
 .rover/
+
+/public/assets
+/node_modules

@@ -1,33 +1,33 @@
-require "rails_helper"
+require 'rails_helper'
 
-feature "Customers:" do
-  scenario "User can updating a customer", :js => true, :driver => :webkit do
+feature 'Customers:' do
+  scenario 'User can updating a customer', :js do
     customer = FactoryBot.create(:customer)
 
     visit customers_path
-    click_on "Test Customer"
+    click_on 'Test Customer'
 
     expect(page.current_path).to eql edit_customer_path(customer)
 
-    fill_in "Name", with: "Test Customer Fernandez"
-    click_on "Save"
+    fill_in 'Name', with: 'Test Customer Fernandez'
+    click_on 'Save'
 
     expect(page.current_path).to eql customers_path
-    expect(page).to have_content("Customer was successfully updated")
-    expect(page).to have_content("Test Customer Fernandez")
+    expect(page).to have_content('Customer was successfully updated')
+    expect(page).to have_content('Test Customer Fernandez')
   end
 
-  scenario "User can't update a customer with invalid data", :js => true, :driver => :webkit do
+  scenario "User can't update a customer with invalid data", :js do
     customer = FactoryBot.create(:customer)
 
     visit edit_customer_path(customer)
 
-    fill_in "Name", with: ""
-    fill_in "VAT ID", with: ""
+    fill_in 'Name', with: ''
+    fill_in 'VAT ID', with: ''
 
-    click_on "Save"
+    click_on 'Save'
 
     expect(page.current_path).to eql customer_path(customer)
-    expect(page).to have_content "1 error"
+    expect(page).to have_content '1 error'
   end
 end

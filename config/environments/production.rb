@@ -22,6 +22,12 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
+  # Enable static file serving and logging for Heroku (replaces rails_12factor)
+  if ENV['RAILS_SERVE_STATIC_FILES'].present?
+    config.public_file_server.enabled = true
+    config.log_level = :info
+  end
+
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
