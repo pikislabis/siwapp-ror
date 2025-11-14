@@ -1,4 +1,4 @@
-FROM ruby:3.1.4-slim
+FROM ruby:3.3.5-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -16,7 +16,7 @@ RUN	apt-get install -y \
 	qt5-default \
 	git \
 	xvfb && \
-    gem install bundler -v 3.1.4
+    gem install bundler
 
 # Copy project src to container
 COPY ./Gemfile /app/
