@@ -1,6 +1,6 @@
 class Api::V1::TaxesController < Api::V1::BaseController
   before_action :set_type
-  before_action :set_tax, only: [:show, :edit, :update, :destroy]
+  before_action :set_tax, only: [:show, :update, :destroy]
 
   # GET /api/v1/taxes
   # GET /api/v1/items/:item_id/taxes

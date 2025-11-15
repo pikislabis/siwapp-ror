@@ -1,6 +1,6 @@
 class Api::V1::SeriesController < Api::V1::BaseController
   before_action :set_type
-  before_action :set_series, only: [:show, :edit, :update, :destroy]
+  before_action :set_series, only: [:show, :update, :destroy]
 
   # GET /api/v1/series
   def index

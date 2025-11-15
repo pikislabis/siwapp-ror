@@ -1,6 +1,6 @@
 class TaxesController < ApplicationController
   before_action :set_type
-  before_action :set_tax, only: [:show, :edit, :update, :destroy]
+  before_action :set_tax, only: [:edit, :update, :destroy]
 
   # GET /taxes
   # GET /taxes.json

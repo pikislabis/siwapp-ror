@@ -1,6 +1,6 @@
 class Api::V1::CustomersController < Api::V1::BaseController
   before_action :set_type
-  before_action :set_customer, only: [:show, :edit, :update, :destroy]
+  before_action :set_customer, only: [:show, :update, :destroy]
 
   def index
     @search = Customer.ransack(params[:q])

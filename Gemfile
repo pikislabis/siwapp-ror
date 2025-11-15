@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '3.3.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.1.0'
 # Use SCSS for stylesheets
 gem 'sassc', '~> 2.4.0'
 gem 'sass-rails'
@@ -78,6 +78,7 @@ gem 'material_icons'
 gem 'money'
 gem 'pg'
 gem 'puma'
+gem 'rackup'
 gem 'rails-settings-cached'
 gem 'ransack'
 gem 'sass'
@@ -95,4 +96,4 @@ gem 'wisper-celluloid'
 gem 'http'
 # for translation
 gem 'dotenv-rails', groups: %i[development test]
-gem 'route_translator'
+gem 'route_translator', '~> 14.1'

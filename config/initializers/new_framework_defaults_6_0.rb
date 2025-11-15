@@ -28,7 +28,8 @@ Rails.application.config.active_storage.queues.purge    = :active_storage_purge
 
 # When assigning to a collection of attachments declared via `has_many_attached`, replace existing
 # files instead of appending. Use #attach to add new attachments without replacing existing ones.
-Rails.application.config.active_storage.replace_on_assign_to_many = true
+# Note: This setting is deprecated and has no effect in Rails 7.1+
+# Rails.application.config.active_storage.replace_on_assign_to_many = true
 
 # Use ActionMailer::MailDeliveryJob for sending parameterized and normal mail.
 #

@@ -1,3 +1,3 @@
 RouteTranslator.config do |config|
-  config.i18n_use_slash_separator = true
+  config.force_locale = true
 end

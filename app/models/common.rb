@@ -160,6 +160,16 @@ class Common < ActiveRecord::Base
 
 protected
 
+  # Declare searchable attributes
+  def self.ransackable_attributes(auth_object = nil)
+    column_names
+  end
+
+  # Declare searchable associations
+  def self.ransackable_associations(auth_object = nil)
+    reflect_on_all_associations.map { |a| a.name.to_s }
+  end
+
   # Declare scopes for search
   def self.ransackable_scopes(auth_object = nil)
     [:with_terms]

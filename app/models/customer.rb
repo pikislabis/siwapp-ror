@@ -3,7 +3,7 @@ class Customer < ActiveRecord::Base
 
   extend ModelCsv
 
-  serialize :meta_attributes, JSON
+  serialize :meta_attributes, coder: JSON
 
   acts_as_paranoid
   has_many :invoices
@@ -82,6 +82,14 @@ private
       errors[:base] << "This customer can't be deleted because it has unpaid invoices"
       throw(:abort)
     end
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    column_names
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    reflect_on_all_associations.map { |a| a.name.to_s }
   end
 
   def self.ransackable_scopes(auth_object = nil)
