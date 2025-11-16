@@ -4,9 +4,13 @@ ruby '3.3.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.1.0'
-# Use SCSS for stylesheets
-gem 'sassc', '~> 2.4.0'
-gem 'sass-rails'
+
+# Asset pipeline
+gem 'sprockets-rails'
+
+# Modern Dart Sass for stylesheets
+gem 'dartsass-rails'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -73,7 +77,6 @@ gem 'puma'
 gem 'rackup'
 gem 'rails-settings-cached'
 gem 'ransack'
-gem 'sass'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'valid_url'

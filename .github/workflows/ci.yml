@@ -45,6 +45,9 @@ jobs:
           bin/rails db:create
           bin/rails db:schema:load
 
+      - name: Build CSS with Dart Sass
+        run: bin/rails dartsass:build
+
       - name: Precompile assets
         run: bin/rails assets:precompile
 

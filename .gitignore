@@ -25,6 +25,8 @@ Gemfile.lock
 .env
 .rover/
 
+# Compiled assets
+/app/assets/builds
 /public/assets
 /node_modules
 /vendor/bundle
