@@ -11,8 +11,7 @@ gem 'sprockets-rails'
 # Modern Dart Sass for stylesheets
 gem 'dartsass-rails'
 
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails'
+# CoffeeScript removed - using modern JavaScript instead
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
