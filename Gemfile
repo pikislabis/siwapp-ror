@@ -15,7 +15,13 @@ gem 'dartsass-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-# Use jquery as the JavaScript library
+# Hotwire: Turbo + Stimulus for modern JavaScript
+gem 'hotwire-rails'
+gem 'turbo-rails'
+gem 'stimulus-rails'
+gem 'importmap-rails'
+
+# Use jquery as the JavaScript library (keeping temporarily for third-party libs)
 gem 'jquery-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
